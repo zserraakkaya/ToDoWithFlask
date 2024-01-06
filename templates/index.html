@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>ToDo</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>ToDo</h1>
+
+    {% if tasks|length < 1 %} <p>Your <span class="italic">ToDo</span> is empty. Add a new task below!</p>
+
+        {% else %}
+        <table>
+            <tr>
+                <th>Task Name</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+            </tr>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.content }}</td>
+                <td>{{ task.date_created.strftime('%d %b %Y %H:%M') }}</td>
+                <td>
+                    <a href="/delete/{{task.id}}" class="delete_btn">Delete Task</a>
+                    <a href="/update/{{task.id}}" class="edit_btn">Edit Task</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        <form action="/" method="post">
+            <input type="text" name="content" id="content" class="input">
+            <input type="submit" name="submit" id="submit" value="Add Task to ToDo" class="button">
+        </form>
+</div>
+{% endblock %}
